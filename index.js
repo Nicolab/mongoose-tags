@@ -1,9 +1,11 @@
-var _ = require('underscore');
+'use strict';
+
+var _ = require('lodash');
 
 
 /**
  * Mongoose plugin
- * 
+ *
  * Adds the ability to add and remove tags to a document, and find models filtered by tags.
  * Uses safe atomic updates to avoid race conditions.
  * Meant to be used in a similar way to GitHub Issue's 'labels' feature.
@@ -14,7 +16,7 @@ var _ = require('underscore');
  * @param {Schema} schema
  * @param {Object} [pluginOptions]
  * @param {String} [pluginOptions.path]           Path/key where tags will be stored. Default: 'tags'
-*/
+ */
 module.exports = function(schema, pluginOptions) {
   pluginOptions = _.extend({
     path: 'tags'
@@ -29,7 +31,7 @@ module.exports = function(schema, pluginOptions) {
 
   /**
    * Add a tag
-   * 
+   *
    * If a callback is passed, the change is made on the database (atomically).
    *
    * If no callback is passed, the change is made on the local (in memory) instance
@@ -51,7 +53,7 @@ module.exports = function(schema, pluginOptions) {
 
   /**
    * Remove a tag
-   * 
+   *
    * If a callback is passed, the change is made on the database (atomically).
    *
    * If no callback is passed, the change is made on the local (in memory) instance
@@ -103,7 +105,9 @@ module.exports = function(schema, pluginOptions) {
     if (includeTags && includeTags.length) {
       var includeCondition = {};
 
-      includeCondition[path] = { $all: includeTags }
+      includeCondition[path] = {
+        $all: includeTags
+      };
 
       conditions.push(includeCondition);
     }
@@ -116,7 +120,7 @@ module.exports = function(schema, pluginOptions) {
         $not: {
           $in: excludeTags
         }
-      }
+      };
 
       conditions.push(excludeCondition);
     }
@@ -127,7 +131,7 @@ module.exports = function(schema, pluginOptions) {
     }
 
     return query;
-  }
+  };
 
 
 
@@ -139,7 +143,7 @@ module.exports = function(schema, pluginOptions) {
 
   /**
    * Add a tag to a document atomically on the database (async)
-   * 
+   *
    * NOTE: This method modifies the document on the database
    *
    * @param {Model} self      The model instance
@@ -152,7 +156,9 @@ module.exports = function(schema, pluginOptions) {
     //Find the doc  to update if it doesn't have the tag
     var conditions = {};
     conditions._id = self._id;
-    conditions[path] = { $ne: tag };
+    conditions[path] = {
+      $ne: tag
+    };
 
     //Add the tag to the model
     var update = {};
@@ -198,7 +204,7 @@ module.exports = function(schema, pluginOptions) {
 
   /**
    * Remove a tag from a document atomically on the database (async)
-   * 
+   *
    * NOTE: This method modifies the document on the database
    *
    * @param {Model} self      The model instance

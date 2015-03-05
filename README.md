@@ -1,6 +1,6 @@
-#mongoose-taggable
+# mongoose-tags
 
-A simple tagging plugin for Mongoose
+A simple tagging plugin for Mongoose (fork of [mongoose-taggable](https://github.com/powmedia/mongoose-taggable)).
 
 Adds the ability to add and remove tags to a document, and find models filtered by tags.
 Uses safe atomic updates to avoid race conditions.
@@ -8,9 +8,9 @@ Uses safe atomic updates to avoid race conditions.
 NOTE: Indexes are not applied to the tags path, because you should probably
 use a compound index with other paths in your schema
 
-##API
+## API
 
-###model.addTag(tag)
+### model.addTag(tag)
 Add a tag (in memory only)
 
 - @param {String} tag     The tag to add
@@ -18,7 +18,7 @@ Add a tag (in memory only)
 - @return {Boolean}       False if tag already existed; true if added
 
 
-###model.addTag(tag, cb)
+### model.addTag(tag, cb)
 Add a tag to a document atomically
 
 NOTE: This method modifies the document on the database
@@ -27,7 +27,7 @@ NOTE: This method modifies the document on the database
 - @param {Function} cb   Callback(err, addedTag)  addedTag will be false if tag already existed; true if added
 
 
-###model.removeTag(tag)
+### model.removeTag(tag)
 Remove a tag (in memory only)
 
 - @param {String} tag     The tag to add
@@ -35,7 +35,7 @@ Remove a tag (in memory only)
 - @return {Boolean}       False if tag didn't exist; true if removed
 
 
-###model.removeTag(tag, cb)
+### model.removeTag(tag, cb)
 Remove a tag from a document atomically
 
 NOTE: This method modifies the document on the database
@@ -44,7 +44,7 @@ NOTE: This method modifies the document on the database
 - @param {Function} cb   Callback(err, removedTag)  removedTag will be false if tag didn't exist; true if removed
 
 
-###model.hasTag(tag)
+### model.hasTag(tag)
 Returns whether the document as a given tag
 
 - @param {String} tag
@@ -52,7 +52,7 @@ Returns whether the document as a given tag
 - @return {Boolean}
 
 
-###Model.filterByTags(query, includeTags, [excludeTags])
+### Model.filterByTags(query, includeTags, [excludeTags])
 Alters a query to filter by tags.
 
 - @param {Query} query            Mongoose query object
@@ -60,7 +60,13 @@ Alters a query to filter by tags.
 - @param {String[]} excludeTags   Tags the document must NOT have (must not have any)
 
 
+## Author
 
-##Changelog
-###v0.5.0
+ * [Charles Davison](https://github.com/powmedia/mongoose-tags) (mongoose-tags)
+ * [Nicolas Talle](https://github.com/Nicolab/mongoose-tags) (mongoose-tags)
+
+
+## Changelog
+
+### v0.5.0
 - Changed the way excludeTags works in filterByTags(), from an AND operation to an OR operation. The method now selects items that have ALL of the includeTags but filters out items that have ANY of the excludeTags.

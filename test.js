@@ -2,14 +2,14 @@
 
 process.env.NODE_ENV = 'test';
 
-var _ = require('underscore'),
+var _ = require('lodash'),
     mongoose = require('mongoose'),
     Schema = mongoose.Schema,
-    fixtures = require('pow-mongodb-fixtures').connect('mongoose-taggable'),
+    fixtures = require('pow-mongodb-fixtures').connect('mongoose-tags'),
     id = require('pow-mongodb-fixtures').createObjectId,
     sinon = require('sinon');
 
-mongoose.connect('mongodb://localhost/mongoose-taggable', function(err) {
+mongoose.connect('mongodb://localhost/mongoose-tags', function(err) {
   //if (err) throw err;
 });
 
